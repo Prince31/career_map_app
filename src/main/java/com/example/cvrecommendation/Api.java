@@ -11,4 +11,7 @@ public interface Api {
     //HTTP annotation providing request method and relative URL
     @POST("/auth")
     Call<ResponseBody> postUser(@Body RequestBody requestBody);
+
+    @POST("/register")
+    Call<ResponseBody> registerUser(@Body RequestBody requestBody);
 }

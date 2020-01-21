@@ -19,25 +19,25 @@ public class LetsGetStarted extends AppCompatActivity {
     }
 
     //to enable app exit on double back press only
-    @Override
-    public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-//            super.onBackPressed();
+//    @Override
+//    public void onBackPressed() {
+//        if (doubleBackToExitPressedOnce) {
+////            super.onBackPressed();
+////            return;
+//            this.finishAffinity();
 //            return;
-            this.finishAffinity();
-            return;
-        }
-
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-        //Handler().postDelayed will call run after 2 seconds to set doubleBackToExitPressedOnce = false
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce=false;
-            }
-        }, 2000);
-    }
+//        }
+//
+//        this.doubleBackToExitPressedOnce = true;
+//        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+//        //Handler().postDelayed will call run after 2 seconds to set doubleBackToExitPressedOnce = false
+//        new Handler().postDelayed(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                doubleBackToExitPressedOnce=false;
+//            }
+//        }, 2000);
+//    }
 
 }
