@@ -16,6 +16,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
+    static String api_response="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +37,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void retrofitLibrary(String json){
+    public static String retrofitLibrary(String json){
+
         //Retrofit Class defining base url where app needs to post data
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://prediction1-rest-api.herokuapp.com/")
+                .baseUrl("https://job-recommendation-api.herokuapp.com/")
                 .build();
         //Retrofit class generates an implementation of Api interface
         Api api = retrofit.create(Api.class);
@@ -53,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                 try {
-                    ;
+                    api_response = response.body().string();
+
                 } catch (Exception e) {
                     e.printStackTrace();
 
@@ -63,11 +66,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 if(t.toString().equals("java.net.UnknownHostException:" +
-                        " Unable to resolve host \"prediction1-rest-api.herokuapp.com\": No address associated with hostname"))
-                    Toast.makeText(getApplicationContext(), "Please Check Your Network Connection", Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(getApplicationContext(), "Server Not Responding. Please Try Again, Later.", Toast.LENGTH_SHORT).show();
+                        " Unable to resolve host \"prediction1-rest-api.herokuapp.com\": No address associated with hostname")) {
+                    api_response = "Please Check Your Network Connection";
+//                    Toast.makeText(getApplicationContext(), "Please Check Your Network Connection", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    api_response="Server Not Responding. Please Try Again, Later.";
+//                    Toast.makeText(getApplicationContext(), "Server Not Responding. Please Try Again, Later.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+        return api_response;
     }
 }

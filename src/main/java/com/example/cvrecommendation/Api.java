@@ -9,6 +9,6 @@ import retrofit2.http.POST;
 
 public interface Api {
     //HTTP annotation providing request method and relative URL
-    @POST("/")
+    @POST("/auth")
     Call<ResponseBody> postUser(@Body RequestBody requestBody);
 }
