@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ public class LogIn extends AppCompatActivity {
 
     EditText emailEditText;
     EditText passEditText;
+    Button loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,8 @@ public class LogIn extends AppCompatActivity {
 
         emailEditText = findViewById(R.id.emailEditText);
         passEditText = findViewById(R.id.passEditText);
+        loginButton = findViewById(R.id.loginScreenButton);
+
     }
 
     //Function To check if all editText fields have valid values before posting data to server
@@ -42,14 +46,18 @@ public class LogIn extends AppCompatActivity {
         } else if (password.equals("")) {
             passEditText.requestFocus();
             Toast.makeText(this, "Please fill all fields and press login", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else if (!email_address.matches("[a-zA-Z0-9._-]+@[a-z]+.[a-z]+")) {
+            emailEditText.requestFocus();
+            Toast.makeText(this, "Invalid Email Address", Toast.LENGTH_SHORT).show();
+        } else {
             return true;
         }
+        loginButton.setClickable(true);
         return false;
     }
 
-    public void letsGetStarted(View view){
+    public void login(View view){
+        loginButton.setClickable(false);
         String email_address= emailEditText.getText().toString();
         String password= passEditText.getText().toString();
         boolean inputFieldCheck = inputFieldValidation(email_address, password);
@@ -93,7 +101,8 @@ public class LogIn extends AppCompatActivity {
                             String name = jsonOb.optString("name");
                             System.out.println(name);
 
-                            Intent intent = new Intent(getApplicationContext(), LetsGetStarted.class);
+                            Intent intent = new Intent(getApplicationContext(), LetsGetStarted.class);  //go with access token verification
+                            intent.putExtra("user_name", name);
                             startActivity(intent);
                         } else {
                             Toast.makeText(getApplicationContext(), "Invalid email_address or Password", Toast.LENGTH_SHORT).show();
@@ -104,6 +113,7 @@ public class LogIn extends AppCompatActivity {
                         e.printStackTrace();
 
                     }
+                    loginButton.setClickable(true);
                 }
 
                 //Method executed if request fails
@@ -115,6 +125,7 @@ public class LogIn extends AppCompatActivity {
                     } else {
                         Toast.makeText(getApplicationContext(), "Server Not Responding. Please Try Again, Later.", Toast.LENGTH_SHORT).show();
                     }
+                    loginButton.setClickable(true);
                 }
             });
         }
