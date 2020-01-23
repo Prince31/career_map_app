@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     public void screen_check(){
          //Retrieving the value using its keys the file name must be same in both saving and retrieving the data
         SharedPreferences sharedPreferences = this.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
