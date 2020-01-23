@@ -25,7 +25,7 @@ public class LogIn extends AppCompatActivity {
 
     EditText emailEditText;
     EditText passEditText;
-    Button loginButton;
+    static Button loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,21 @@ public class LogIn extends AppCompatActivity {
         passEditText = findViewById(R.id.passEditText);
         loginButton = findViewById(R.id.loginScreenButton);
 
+
+
     }
+
+    @Override
+    public void onBackPressed() {
+        try {
+            MainActivity.loginScreenButton.setClickable(true);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        super.onBackPressed();
+        return;
+    }
+
 
     //Function To check if all editText fields have valid values before posting data to server
     public boolean inputFieldValidation(String email_address, String password){
@@ -106,14 +120,16 @@ public class LogIn extends AppCompatActivity {
                             startActivity(intent);
                         } else {
                             Toast.makeText(getApplicationContext(), "Invalid email_address or Password", Toast.LENGTH_SHORT).show();
+                            loginButton.setClickable(true);
                         }
 
                     } catch (Exception e) {
                         System.out.println("response catch exception : " + e);
                         e.printStackTrace();
+                        loginButton.setClickable(true);
 
                     }
-                    loginButton.setClickable(true);
+
                 }
 
                 //Method executed if request fails

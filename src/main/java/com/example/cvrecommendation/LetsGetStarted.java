@@ -23,7 +23,6 @@ import okhttp3.RequestBody;
 
 public class LetsGetStarted extends AppCompatActivity {
 
-    boolean doubleBackToExitPressedOnce = false;
     TextView welcomeTextView;
     Intent file_choose_intent;
 
@@ -33,7 +32,24 @@ public class LetsGetStarted extends AppCompatActivity {
         setContentView(R.layout.activity_lets_get_started);
 
         welcomeTextView = findViewById(R.id.welcomeTextView);
+
         welcomeScreen();
+    }
+
+        @Override
+    public void onBackPressed() {
+            try {
+                LogIn.loginButton.setClickable(true);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            try {
+                SignUp.signupButton.setClickable(true);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            super.onBackPressed();
+            return;
     }
 
     public void welcomeScreen(){

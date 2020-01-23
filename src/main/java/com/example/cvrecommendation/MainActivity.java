@@ -14,8 +14,8 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
     ConstraintLayout losignConstraintLayout;
     ConstraintLayout loadingConstraintLayout;
-    Button loginScreenButton;
-    Button signupScreenButton;
+    static Button loginScreenButton;
+    static Button signupScreenButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         signupScreenButton = findViewById(R.id.signupScreenButton);
 
         screen_check();
+
     }
 
     public void screen_check(){

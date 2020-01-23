@@ -31,7 +31,7 @@ public class SignUp extends AppCompatActivity {
     EditText passEditText;
     EditText zipCodeEditText;
     RadioButton tcRadioButton;
-    Button signupButton;
+    static Button signupButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,19 @@ public class SignUp extends AppCompatActivity {
         tcRadioButton= findViewById(R.id.tcRadioButton);
         signupButton = findViewById(R.id.signupButton);
 
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        try {
+            MainActivity.signupScreenButton.setClickable(true);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        super.onBackPressed();
+        return;
     }
 
 
@@ -127,14 +140,15 @@ public class SignUp extends AppCompatActivity {
 
                         } else {
                             Toast.makeText(getApplicationContext(), "User Already registered with this Email Address", Toast.LENGTH_SHORT).show();
+                            signupButton.setClickable(true);
                         }
 
                     } catch (Exception e) {
                         System.out.println("response catch exception : " + e);
                         e.printStackTrace();
-
+                        signupButton.setClickable(true);
                     }
-                    signupButton.setClickable(true);
+
                 }
 
                 //Method executed if request fails
