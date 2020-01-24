@@ -19,8 +19,9 @@ public interface Api {
     Call<ResponseBody> registerUser(@Body RequestBody requestBody);
 
     @Multipart
-    @POST("upload")
-    Call<ResponseBody> upload(
+    @POST("/user_cv_upload")
+    Call<ResponseBody> uploadcv(
+//            @Part("access_token") RequestBody access_token,  add access token
             @Part("description") RequestBody description,
             @Part MultipartBody.Part file
     );
