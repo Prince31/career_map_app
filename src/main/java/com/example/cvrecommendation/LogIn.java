@@ -81,6 +81,7 @@ public class LogIn extends AppCompatActivity {
         return false;
     }
 
+    //**Another location of login at SignUp.java file
     public void login(View view){
         loginButton.setClickable(false);
         String email_address= emailEditText.getText().toString();
@@ -109,25 +110,30 @@ public class LogIn extends AppCompatActivity {
 ////
                         if (response.isSuccessful()) {
                             String api_response = response.body().string();
-                            System.out.println(api_response);
+                            System.out.println("api_response"+api_response);
                             JSONObject jsonOb = new JSONObject(api_response);
                             String access_token = jsonOb.optString("access_token");
                             System.out.println(access_token);
-
+                            String email_address_received = jsonOb.optString("email_address");
+                            System.out.println(email_address_received);
                             // Storing data into SharedPreferences
                             SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
                             // Creating an Editor object to edit(write to the file)
                             SharedPreferences.Editor myEdit = sharedPreferences.edit();
                             // Storing the key and its value as the data fetched from edittext
                             myEdit.putString("access_token", access_token);
+                            myEdit.putString("email_address", email_address_received);
                             // Once the changes have been made, we need to commit to apply those changes made, otherwise, it will throw an error
                             myEdit.commit();
 
                             String name = jsonOb.optString("name");
                             System.out.println(name);
+                            String email_address = jsonOb.optString("email_address");
 
                             Intent intent = new Intent(getApplicationContext(), LetsGetStarted.class);  //go with access token verification
                             intent.putExtra("user_name", name);
+                            intent.putExtra("access_token", access_token);
+                            intent.putExtra("email_address", email_address);
                             startActivity(intent);
                         } else {
                             Toast.makeText(getApplicationContext(), "Invalid email_address or Password", Toast.LENGTH_SHORT).show();

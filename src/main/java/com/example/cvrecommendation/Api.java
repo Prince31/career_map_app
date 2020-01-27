@@ -5,8 +5,11 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 
 
@@ -19,10 +22,12 @@ public interface Api {
     Call<ResponseBody> registerUser(@Body RequestBody requestBody);
 
     @Multipart
-    @POST("/user_cv_upload")
+    @PUT("/user_cv_upload")
     Call<ResponseBody> uploadcv(
-//            @Part("access_token") RequestBody access_token,  add access token
-            @Part("description") RequestBody description,
+            @Header("Authorization") String access_token,
+            @Part("email_address") RequestBody email_address,
             @Part MultipartBody.Part file
     );
+
+
 }

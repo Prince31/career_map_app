@@ -29,12 +29,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LetsGetStarted extends AppCompatActivity {
 
     TextView welcomeTextView;
     Intent file_choose_intent;
     String access_token="";
+    String email_address = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class LetsGetStarted extends AppCompatActivity {
         welcomeTextView = findViewById(R.id.welcomeTextView);
 
         access_token="";
+        email_address="";
         welcomeScreen();
     }
 
@@ -83,6 +86,7 @@ public class LetsGetStarted extends AppCompatActivity {
         if (extras != null) {
             user_name = Objects.requireNonNull(intent.getExtras()).getString("user_name", "guest");
             access_token = intent.getExtras().getString("access_token", "guest");
+            email_address = intent.getExtras().getString("email_address",null);
         }
         welcomeTextView.setText(String.format("Welcome %s", user_name));
     }
@@ -144,13 +148,13 @@ public class LetsGetStarted extends AppCompatActivity {
             // MultipartBody.Part is used to send also the actual file name
                     MultipartBody.Part body =
                             MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-
+                System.out.println("email check"+email_address);
             // add another part within the multipart request
-                    RequestBody access_token_saved =
-                            RequestBody.create(MediaType.parse("multipart/form-data"), access_token);
-                    access_token+="JWT "+access_token;
+                    RequestBody email_address_request =
+                            RequestBody.create(MediaType.parse("application/json"), email_address);
+        access_token="JWT "+access_token;
         //This method POST request and we receive return data in response
-        api.uploadcv(access_token, body).enqueue(new Callback<ResponseBody>() {        //add access token
+        api.uploadcv(access_token, email_address_request, body).enqueue(new Callback<ResponseBody>() {        //add access token
             //Method executed if we receive response from server
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -164,6 +168,13 @@ public class LetsGetStarted extends AppCompatActivity {
                         System.out.println(message_received);
                         welcomeTextView.setText(message_received);
                     } else {
+                        System.out.println(response.message());
+                        System.out.println(response.headers());
+                        System.out.println(response.errorBody());
+                        System.out.println(response.code());
+                        System.out.println(response.raw());
+                        System.out.println(response.toString());
+                        System.out.println(response.body());
                         Toast.makeText(getApplicationContext(), "File Not Uploaded. Please try again", Toast.LENGTH_SHORT).show();
                         System.out.println("File Not Uploaded. Please try again");
                         welcomeTextView.setText("File Not Uploaded. Please try again");

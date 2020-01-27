@@ -179,7 +179,7 @@ public class SignUp extends AppCompatActivity {
         }
     }
 
-
+    //**Another location of login at LogIn.java file
     public void loginAfterSignup(String email_address, String password){
 
         String sign_in_json = "{\"email_address\": \"" + email_address + "\", \"password\": \"" + password + "\"}";
@@ -206,6 +206,9 @@ public class SignUp extends AppCompatActivity {
                         JSONObject jsonOb = new JSONObject(api_response);
                         String access_token = jsonOb.optString("access_token");
                         System.out.println(access_token);
+                        String email_address_received = jsonOb.optString("email_address");
+                        System.out.println(email_address_received);
+
 
                         // Storing data into SharedPreferences
                         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
@@ -213,14 +216,18 @@ public class SignUp extends AppCompatActivity {
                         SharedPreferences.Editor myEdit = sharedPreferences.edit();
                         // Storing the key and its value as the data fetched from edittext
                         myEdit.putString("access_token", access_token);
+                        myEdit.putString("email_address", email_address_received);
                         // Once the changes have been made, we need to commit to apply those changes made, otherwise, it will throw an error
                         myEdit.commit();
 
                         String name = jsonOb.optString("name");
                         System.out.println(name);
+                        String email_address = jsonOb.optString("email_address");
 
                         Intent intent = new Intent(getApplicationContext(), LetsGetStarted.class);  //go with access token verification
                         intent.putExtra("user_name", name);
+                        intent.putExtra("access_token", access_token);
+                        intent.putExtra("email_address", email_address);
                         startActivity(intent);
 
                     } else {
